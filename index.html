@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>История - Тестирование</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+      (function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        ((k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a));
+      })(
+        window,
+        document,
+        "script",
+        "https://mc.yandex.ru/metrika/tag.js?id=107215943",
+        "ym",
+      );
+
+      ym(107215943, "init", {
+        ssr: true,
+        webvisor: true,
+        clickmap: true,
+        ecommerce: "dataLayer",
+        referrer: document.referrer,
+        url: location.href,
+        accurateTrackBounce: true,
+        trackLinks: true,
+      });
+    </script>
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/107215943"
+          style="position: absolute; left: -9999px"
+          alt=""
+        /></div
+    ></noscript>
+    <!-- /Yandex.Metrika counter -->
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        🏛️ История России
+        <span>Проверь свои знания!</span>
+      </h1>
+
+      <!-- Экран выбора темы -->
+      <div id="topicsScreen" class="card">
+        <h2>Выбери тему</h2>
+        <div class="form-group">
+          <label for="studentName">Твоё имя (необязательно)</label>
+          <input
+            type="text"
+            id="studentName"
+            class="form-control"
+            placeholder="Введите имя"
+          />
+        </div>
+        <div id="topicsList" class="topics-list">
+          <!-- Темы загружаются динамически -->
+        </div>
+        <p
+          id="noTopics"
+          class="hidden"
+          style="text-align: center; color: #666; margin-top: 20px"
+        >
+          Пока нет доступных тем. Зайдите позже! 📚
+        </p>
+      </div>
+
+      <!-- Экран выбора режима -->
+      <div id="modeScreen" class="card hidden">
+        <h2>Выбери режим</h2>
+        <div class="topics-list">
+          <div class="topic-item" onclick="startMode('practice')">
+            <span class="icon">📖</span>
+            <div class="info">
+              <div class="title">Практика</div>
+              <div class="count">
+                Вопросы по одному, можно закончить в любой момент
+              </div>
+            </div>
+            <span class="arrow">→</span>
+          </div>
+          <div class="topic-item" onclick="startMode('test')">
+            <span class="icon">📝</span>
+            <div class="info">
+              <div class="title">Тест</div>
+              <div class="count">Фиксированное количество вопросов</div>
+            </div>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 20px">
+          <label for="questionCount">Количество вопросов в тесте:</label>
+          <select id="questionCount" class="form-control">
+            <option value="5">5 вопросов</option>
+            <option value="10" selected>10 вопросов</option>
+            <option value="15">15 вопросов</option>
+            <option value="20">20 вопросов</option>
+          </select>
+        </div>
+        <button
+          class="btn btn-outline btn-block"
+          style="margin-top: 20px"
+          onclick="showTopics()"
+        >
+          ← Назад к темам
+        </button>
+      </div>
+
+      <!-- Экран тестирования -->
+      <div id="quizScreen" class="hidden">
+        <div class="card">
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div
+                id="progressFill"
+                class="progress-fill"
+                style="width: 0%"
+              ></div>
+            </div>
+            <p id="progressText" class="progress-text">Вопрос 1 из 10</p>
+          </div>
+        </div>
+
+        <div id="questionsContainer">
+          <!-- Вопросы загружаются динамически -->
+        </div>
+
+        <div class="card">
+          <button
+            id="submitBtn"
+            class="btn btn-success btn-block"
+            onclick="submitAnswers()"
+          >
+            ✅ Завершить тест
+          </button>
+        </div>
+      </div>
+
+      <!-- Экран результатов -->
+      <div id="resultsScreen" class="hidden">
+        <div class="card results-card">
+          <div id="resultIcon" class="result-icon">🏆</div>
+          <h2>Результаты</h2>
+          <div id="scoreDisplay" class="score-display">0/0</div>
+          <p id="scoreText" class="score-text">Отличная работа!</p>
+          <button class="btn btn-primary btn-block" onclick="restartQuiz()">
+            🔄 Пройти ещё раз
+          </button>
+          <button
+            class="btn btn-outline btn-block"
+            style="margin-top: 10px"
+            onclick="showTopics()"
+          >
+            📚 Выбрать другую тему
+          </button>
+        </div>
+
+        <div id="answersReview" class="card">
+          <h2>Проверка ответов</h2>
+          <div id="reviewContainer">
+            <!-- Разбор ответов -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
