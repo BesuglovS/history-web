@@ -266,8 +266,19 @@ function renderSingleQuestion() {
     optionsHtml += "</div>";
   }
 
+  // Определяем тип вопроса для отображения
+  const typeLabels = {
+    single: { text: "Один ответ", icon: "◉" },
+    multiple: { text: "Несколько ответов", icon: "☑" },
+    open: { text: "Открытый вопрос", icon: "✎" },
+  };
+  const questionType = typeLabels[q.type] || typeLabels.single;
+
   questionEl.innerHTML = `
-    <span class="question-number">Вопрос</span>
+    <div class="question-header">
+      <span class="question-number">Вопрос</span>
+      <span class="question-type-badge" data-type="${q.type}">${questionType.icon} ${questionType.text}</span>
+    </div>
     <p class="question-text">${q.text}</p>
     ${optionsHtml}
     <div id="feedbackArea" class="hidden" style="margin-top: 20px;"></div>
@@ -597,8 +608,19 @@ function renderAllQuestions() {
       optionsHtml += "</div>";
     }
 
+    // Определяем тип вопроса для отображения
+    const typeLabels = {
+      single: { text: "Один ответ", icon: "◉" },
+      multiple: { text: "Несколько ответов", icon: "☑" },
+      open: { text: "Открытый вопрос", icon: "✎" },
+    };
+    const questionType = typeLabels[q.type] || typeLabels.single;
+
     questionEl.innerHTML = `
-      <span class="question-number">Вопрос ${index + 1}</span>
+      <div class="question-header">
+        <span class="question-number">Вопрос ${index + 1}</span>
+        <span class="question-type-badge" data-type="${q.type}">${questionType.icon} ${questionType.text}</span>
+      </div>
       <p class="question-text">${q.text}</p>
       ${optionsHtml}
     `;
