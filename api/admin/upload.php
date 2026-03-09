@@ -132,14 +132,25 @@ function parseQuestionsFile($text) {
         // Ответ
         if (mb_strtoupper(mb_substr($line, 0, 6)) === 'ОТВЕТ:') {
             $answerText = trim(mb_substr($line, 6));
-            $nums = array_map(function($n) {
-                return intval(trim($n)) - 1;
-            }, array_filter(explode(',', $answerText), 'is_numeric'));
-            $currentQuestion['answer'] = $nums;
             
-            // Определяем тип вопроса
-            if (count($nums) > 1) {
-                $currentQuestion['type'] = 'multiple';
+            // Проверяем, есть ли варианты ответа у вопроса
+            $hasOptions = !empty($currentQuestion['options']);
+            
+            if ($hasOptions) {
+                // Для вопросов с вариантами - парсим номера
+                $nums = array_map(function($n) {
+                    return intval(trim($n)) - 1;
+                }, array_filter(explode(',', $answerText), 'is_numeric'));
+                $currentQuestion['answer'] = $nums;
+                
+                // Определяем тип вопроса
+                if (count($nums) > 1) {
+                    $currentQuestion['type'] = 'multiple';
+                }
+            } else {
+                // Для открытых вопросов - сохраняем текст ответа
+                $currentQuestion['type'] = 'open';
+                $currentQuestion['answer'] = [$answerText];
             }
             
             $questions[] = $currentQuestion;
